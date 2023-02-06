@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a{
+  color:inherit;
+  text-decoration: none;
+}
+*{
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.header {
+  @apply bg-transparent fixed top-0  left-0 w-[100vw] 
+}
+.header2{
+  position: fixed;
+  width: 100vw;
+  z-index: 2;
+  background-color: rgb(80, 94, 218);
+  transform: translateY(10);
+  transition: transform 6s ease;
+  animation: myanimation 3s;
+}
+@keyframes myanimation {
+  0% {
+    background-color: transparent;
+    color: transparent;
+  }
+  35% {
+    background-color: rgb(125, 146, 212);
+ 
+  }
+  100% {
+    background-color: rgb(80, 94, 218);
+   
+  }
+}
