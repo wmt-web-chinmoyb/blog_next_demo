@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ImFacebook2, ImYoutube, ImTwitter } from "react-icons/im";
 import Link from "next/link";
-import Image from "next/image";
+
 
 const Header = () => {
   const [header, setHeader] = useState("header");
@@ -20,8 +20,8 @@ const Header = () => {
   return (
     <div>
       <header className={header}>
-        <div className="xl:container xl:mx-auto flex flex-col items-center sm:flex-row sm:justify-between py-3">
-          <div className="md:flex-none w-96 order-2 lg:order-1  flex justify-center py-3 sm:py-0">
+        <div className="xl:container xl:mx-auto flex  items-center sm:justify-start px-5  lg:justify-between py-3">
+          <div className="md:flex-none w-96 order-1 lg:order-1   py-3 sm:py-0">
             <svg
               id="logo-38"
               width="78"
@@ -48,14 +48,14 @@ const Header = () => {
               ></path>{" "}
             </svg>
           </div>
-          <div className="shrink w-80  lg:order-2  text-center">
+          <div className="shrink w-80 order-2  lg:order-2  text-center">
             <Link href="/" legacyBehavior>
               <a className="font-bold text-3xl uppercase ">
                 <span className="text-red-500">Blog</span>Post
               </a>
             </Link>
           </div>
-          <div className="w-96 order-3 flex justify-center">
+          <div className="w-96 order-3 hidden lg:flex justify-center " >
             <div className="flex gap-6">
               <Link href="https://www.facebook.com/" legacyBehavior>
                 <a className="hover:text-blue-200">

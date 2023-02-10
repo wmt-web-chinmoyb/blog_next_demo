@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@/components/layout/layout";
 import Author from "@/components/_child/author";
 import Image from "next/image";
@@ -8,25 +8,36 @@ import fetcher from "@/lib/fetcher";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
 
-export default function Page({fallback}) {
+export default function Page({ fallback }) {
   const router = useRouter();
   const { postId } = router.query;
-  const { data, isLoading, isError } = fetcher(`api/posts/${postId}`);
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center">
-        <div
-          className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
-          role="status"
-        ></div>
-      </div>
-    );
-  }
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const getDataBlog = async () => {
+      console.log("postId", postId)
+      const data = await getPost(postId);
+      setData(data);
+      console.log("chinmoy", data);
+    };
+    getDataBlog();
+  }, [postId]);
+  // getDataBlog();
+  // const { data, isLoading, isError } = fetcher(`api/posts/${postId}`);
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex items-center justify-center">
+  //       <div
+  //         className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
+  //         role="status"
+  //       ></div>
+  //     </div>
+  //   );
+  // }
   return (
     <>
-      <SWRConfig value={{fallback}}>
-        <Article {...data} />
-      </SWRConfig>
+      {/* <SWRConfig value={{ fallback }}> */}
+      <Article {...data} />
+      {/* </SWRConfig> */}
     </>
   );
 }
@@ -53,7 +64,12 @@ const Article = ({
           </h1>
           <p className="text-center px-8 text-gray-500 text-xl">{subtitle}</p>
           <div className="py-10">
-            <Image src={img || "/images/img1.jpg"} width={900} height={600} />
+            <Image
+              src={img || "/images/img1.jpg"}
+              width={900}
+              height={600}
+              alt="img"
+            />
           </div>
           <div className="content text-gray-600 text-lg flex flex-col gap-4">
             {description}
@@ -65,29 +81,29 @@ const Article = ({
   );
 };
 
-export async function getStaticPaths() {
-  const posts=await getPost()
+// export async function getStaticPaths() {
+//   const posts = await getPost();
 
-  const paths=posts?.data.map(value=>{
-    return {
-      params:{
-        postId:value.id.toString(),
-      }
-    }
+//   const paths = posts?.data.map((value) => {
+//     return {
+//       params: {
+//         postId: value.id.toString(),
+//       },
+//     };
+//   });
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
+// export async function getServerSideProps({ params }) {
+//   const posts = await getPost(params.postId);
 
-  })
-  return {
-    paths,
-    fallback:false
-  }
-}
-export async function getStaticProps({params}) {
-  const posts=await getPost(params.postId)
-  return {
-    props:{
-      fallback:{
-        'api/posts':posts
-      }
-    }
-  }
-}
+//   return {
+//     props: {
+//       fallback: {
+//         "api/posts": posts,
+//       },
+//     },
+//   };
+// }
